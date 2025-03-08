@@ -8,6 +8,7 @@
 using namespace std;
 
 constexpr int INF = numeric_limits<int>::max();
+constexpr int UNDEFINED = -1;
 
 struct Edge {
     int src=0;
@@ -26,7 +27,12 @@ struct Edge {
 };
 
 struct Graph : public vector<vector<Edge>> {
+    vector<vector<Edge>> adjacencyList;
     int numVertices=0;
+
+    Graph(int vertices = 0) : numVertices(vertices) {
+        adjacencyList.resize(vertices);
+    }
 };
 
 inline istream& operator>>(istream& in, Graph& G) {
