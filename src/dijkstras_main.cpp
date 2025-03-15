@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-    string filename = "/home/connieay/46/hw9/src/medium.txt";  
+    string filename = "/home/connieay/46/hw9/src/small.txt";  
     Graph G;
 
     file_to_graph(filename, G);
@@ -17,7 +17,6 @@ int main() {
 
     vector<int> shortest_path = extract_shortest_path(distances, previous, destination);
 
-    // // Step 5: Output the shortest path and its length
     cout << "Shortest path from " << source << " to " << destination << ": ";
     print_path(shortest_path, distances[destination]);
 
