@@ -5,29 +5,6 @@
 
 using namespace std;
 
-void error(string word1, string word2, string msg) {
-    cout << "Word 1: " << word1 << endl;
-    cout << "Word 2: " << word2 << endl;
-    cout << msg;
-}
-
-void load_words(set<string> & word_list, const string& file_name) {
-    ifstream file(file_name);
-    int nodeNum = 0;
-    
-    file >> nodeNum;
-    string word;
-    while (file >> word) {
-        word_list.insert(word);
-    }
-    file.close();
-}
-
-void print_word_ladder(const vector<string>& ladder) {
-    for (int i = 0; i < ladder.size(); ++i) {
-        cout << ladder[i] << endl;
-    }
-}  
 
 void verify_word_ladder() {
     set<string> word_list;
