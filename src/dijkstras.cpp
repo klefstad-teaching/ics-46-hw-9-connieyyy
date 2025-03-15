@@ -18,10 +18,10 @@ vector<int> extract_shortest_path(const vector<int>& /*distances*/, const vector
 }
 
 void print_path(const vector<int>& v, int total) {
-    cout << total << endl;
     for (int i = 0; i < v.size(); ++i) {
         cout << v[i] << " ";
     }
+    cout << "Total cost is " << total << endl;
 }
 
 vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& previous) {
