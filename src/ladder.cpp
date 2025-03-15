@@ -14,19 +14,21 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
 
     while (i < str1.length() && j < str2.length()) {
         if (str1[i] != str2[j]) {
-            differences++;
-            if (differences > d) {
+            if (++differences > d) {
                 return false;  // Exit early if difference > d
+            } else if (str2.length() > str1.length()) {
+                j++;
+            } else {
+                i++;
+                j++;
             }
+        } else {
+            i++;
+            j++;
         }
-        i++;
-        j++;
+        
     }
-
-    // Add remaining characters from the longer string
-    differences += abs((int)str1.length() - (int)str2.length());
-
-    return differences <= d;
+    return true;
 }
 
 bool is_adjacent(const string& word1, const string& word2) {
