@@ -5,23 +5,27 @@
 using namespace std;
 
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d) {
+    if (abs((int)str1.length() - (int)str2.length()) > d) {
+        return false;
+    }
+
     int i = 0, j = 0;
     int differences = 0;
 
     while (i < str1.length() && j < str2.length()) {
         if (str1[i] != str2[j]) {
+            return false; // testing to prevent time out
             differences++;
+            if (differences > d) {
+                return false;  // Exit early if difference > d
+            }
         }
         i++;
         j++;
     }
-    
-    if (i < str1.length()) {
-        differences += str1.length() - i; 
-    }
-    if (j < str2.length()) {
-        differences += str2.length() - j; 
-    }
+
+    // Add remaining characters from the longer string
+    differences += abs((int)str1.length() - (int)str2.length());
 
     return differences <= d;
 }
