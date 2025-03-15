@@ -14,7 +14,6 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
 
     while (i < str1.length() && j < str2.length()) {
         if (str1[i] != str2[j]) {
-            return false; // testing to prevent time out
             differences++;
             if (differences > d) {
                 return false;  // Exit early if difference > d
@@ -118,7 +117,14 @@ void load_words(set<string> & word_list, const string& file_name) {
 }
 
 void print_word_ladder(const vector<string>& ladder) {
+    if (ladder.empty()) {
+        cout << "No word ladder found." << endl;
+        return;
+    }
+
+    cout << "Word ladder found: ";
     for (size_t i = 0; i < ladder.size(); ++i) {
         cout << ladder[i] << " " << endl;
     }
+    cout << " \n";
 }  
