@@ -12,10 +12,11 @@ void error(string word1, string word2, string msg) {
 }
 
 void load_words(set<string> & word_list, const string& file_name) {
-    ifstream file(filename);
+    ifstream file(file_name);
     int nodeNum = 0;
     
     file >> nodeNum;
+    string word;
     while (file >> word) {
         word_list.insert(word);
     }
@@ -38,4 +39,9 @@ void verify_word_ladder() {
     my_assert(generate_word_ladder("sleep", "awake", word_list).size() == 8);
     my_assert(generate_word_ladder("car", "cheat", word_list).size() == 4);
 
+}
+
+int main() {
+    verify_word_ladder();
+    return 0;
 }

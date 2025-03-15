@@ -1,21 +1,29 @@
 #include "ladder.h"
 #include <iostream>
 #include <fstream>
+#include <cmath>
 using namespace std;
 
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d) {
     int i = 0, j = 0;
+    int differences = 0;
+
     while (i < str1.length() && j < str2.length()) {
         if (str1[i] != str2[j]) {
-            if (i != j) {
-                return false;  
-            }
-            ++j;
-        } else {
-            ++i;
-            ++j;
+            differences++;
         }
+        i++;
+        j++;
     }
+    
+    if (i < str1.length()) {
+        differences += str1.length() - i; 
+    }
+    if (j < str2.length()) {
+        differences += str2.length() - j; 
+    }
+
+    return differences <= d;
 }
 
 bool is_adjacent(const string& word1, const string& word2) {
@@ -28,7 +36,7 @@ bool is_adjacent(const string& word1, const string& word2) {
             }
         }
         return different_letters == 1;
-    } else if (abs(word1.length() - word2.length()) == 1) {
+    } else if (std::abs(static_cast<int>(word1.length() - word2.length())) == 1) {
         // case 2: lengths vary by 1 & all letters are same otherwise
         if (word1.length() > word2.length()) {
             return is_adjacent(word2, word1);  
@@ -44,20 +52,22 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
     }
     // create queue of vector of strings
     queue<vector<string>> ladder_queue; 
-    ladder_queue.push(begin_word);
+    vector<string> word_vector = {begin_word};
+    ladder_queue.push(word_vector);
     set<string> visited;
     visited.insert(begin_word);
 
-    while (ladder_queue) {
+    while (!ladder_queue.empty()) {
         vector<string> ladder = ladder_queue.front();
         ladder_queue.pop();
         string last_word = ladder.back();
 
         for (string word: word_list) {
             if (is_adjacent(last_word, word)) {
-                if (!visited.contains(word)) {
+                if (visited.find(word) == visited.end()) {
                     visited.insert(word);
                     vector<string> new_ladder = ladder;
+                    new_ladder.push_back(word);
                     if (word == end_word) {
                         return new_ladder;
                     }

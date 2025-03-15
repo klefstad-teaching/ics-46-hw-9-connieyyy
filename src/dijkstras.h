@@ -46,10 +46,14 @@ inline istream& operator>>(istream& in, Graph& G) {
 
 inline void file_to_graph(const string& filename, Graph& G) {
     ifstream in(filename);
-    if (!in) {
-        throw runtime_error("Can't open input file");
+    in >> G.numVertices;
+    G.adjacencyList.resize(G.numVertices);
+
+    int src, dst, weight;
+    while (in >> src >> dst >> weight) {
+        G.adjacencyList[src].push_back(Edge{src, dst, weight});
+        G.adjacencyList[dst].push_back(Edge{dst, src, weight});
     }
-    in >> G;
     in.close();
 }
 

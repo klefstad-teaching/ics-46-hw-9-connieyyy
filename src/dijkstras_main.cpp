@@ -3,18 +3,23 @@
 
 using namespace std;
 
-vector<int> extract_shortest_path(const vector<int>& /*distances*/, const vector<int>& previous, int destination) {
-    vecctor<int> path;
-    for (int i = destination; i != UNDEFINED; i = previous[i]) {
-        path.push_back(i);
-    }
-    reverse(path.begin(), path.end());
-    return path;
-}
+int main() {
+    string filename = "/home/connieay/46/hw9/src/medium.txt";  
+    Graph G;
 
-void print_path(const vector<int>& v, int total) {
-    cout << "Total: " << total << endl;
-    for (int i = 0; i < v.length(); ++i) {
-        cout << v[i] << " ";
-    }
+    file_to_graph(filename, G);
+    int source = 0;  
+    int destination = 2;  
+
+
+    vector<int> previous(G.numVertices, UNDEFINED);
+    vector<int> distances = dijkstra_shortest_path(G, source, previous);
+
+    vector<int> shortest_path = extract_shortest_path(distances, previous, destination);
+
+    // // Step 5: Output the shortest path and its length
+    cout << "Shortest path from " << source << " to " << destination << ": ";
+    print_path(shortest_path, distances[destination]);
+
+    return 0;
 }
