@@ -9,12 +9,12 @@
 
 using namespace std;
 
-vector<int> extract_shortest_path(const vector<int>& /*distances*/, const vector<int>& previous, int destination) {
+vector<int> extract_shortest_path(const vector<int>& distances, const vector<int>& previous, int destination) {
     // No path exists!!!
     if (distances[destination] == INF) {
         return vector<int>();
     }
-    
+
     vector<int> path;
     for (int i = destination; i != UNDEFINED; i = previous[i]) {
         path.push_back(i);
@@ -55,7 +55,7 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
         for (Edge edge: G[u]) {
             int v = edge.dst;
             int weight = edge.weight;
-            if (!visited[v] && disatnces[u] !- INF && distances[u] + weight < distances[v]) {
+            if (!visited[v] && distances[u] != INF && distances[u] + weight < distances[v]) {
                 distances[v] = distances[u] + weight;
                 previous[v] = u;
                 minHeap.push({distances[v], v});
