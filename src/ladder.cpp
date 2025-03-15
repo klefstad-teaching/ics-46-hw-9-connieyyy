@@ -30,13 +30,13 @@ bool is_adjacent(const string& word1, const string& word2) {
     int word1length = word1.length();
     int word2length = word2.length();
 
-    if (abs(len1 - len2) > 1) {
+    if (abs(word1length - word2length) > 1) {
         return false;
     }
 
     int difference = 0;
-    i = 0;
-    j = 0;
+    int i = 0;
+    int j = 0;
 
     while (i < word1length && j < word2length) {
         if (word1[i] != word2[j]) {
@@ -49,11 +49,11 @@ bool is_adjacent(const string& word1, const string& word2) {
                 j++;
             } else {
                 i++;
-                j++
+                j++;
             }
         }
-        return true;
     }
+    return true;
 }
 
 vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list) {
@@ -64,7 +64,7 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
     queue<vector<string>> ladder_queue; 
     set<string> visited;
 
-    ladder_queue.push(word_vector);
+    ladder_queue.push({begin_word});
     visited.insert(begin_word);
 
     while (!ladder_queue.empty()) {
@@ -73,7 +73,7 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
         string last_word = ladder.back();
 
         for (string word: word_list) {
-            if (is_adjacent(last_word, word) && visited.find(word)) {
+            if (is_adjacent(last_word, word) && visited.find(word) == visited.end()) {
                 if (visited.find(word) == visited.end()) {
 
                     vector<string> new_ladder = ladder;
