@@ -5,10 +5,16 @@
 #include <list>
 #include <climits>
 #include <fstream>
+#include <algorithm>
 
 using namespace std;
 
 vector<int> extract_shortest_path(const vector<int>& /*distances*/, const vector<int>& previous, int destination) {
+    // No path exists!!!
+    if (distances[destination] == INF) {
+        return vector<int>();
+    }
+    
     vector<int> path;
     for (int i = destination; i != UNDEFINED; i = previous[i]) {
         path.push_back(i);
@@ -26,31 +32,30 @@ void print_path(const vector<int>& v, int total) {
 }
 
 vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& previous) {
-    int numVertices = G.numVertices;
     // start off all distances with infinite
-    
-    vector<int> distances(numVertices, INF);
-    previous.assign(numVertices, -1);
-    // starting node distance to itself is 0
-    distances[source] = 0;
+    vector<int> distances(G.numVertices, INF);
+    vector<bool> visited(G.numVertices, false);
+    previous.assign(G.numVertices, -1);
 
     // (priority (distance/ weight), data)
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> minHeap;
+    distances[source] = 0;
     minHeap.push({0, source});
     
     while (!minHeap.empty()) {
-        int dist = minHeap.top().first;
         int u = minHeap.top().second;
         minHeap.pop();
 
-        if (dist > distances[u]) {
+        if (visited[u]) {
             continue;
         }
+
+        visited[u] = true;
 
         for (Edge edge: G[u]) {
             int v = edge.dst;
             int weight = edge.weight;
-            if (distances[u] + weight < distances[v]) {
+            if (!visited[v] && disatnces[u] !- INF && distances[u] + weight < distances[v]) {
                 distances[v] = distances[u] + weight;
                 previous[v] = u;
                 minHeap.push({distances[v], v});
